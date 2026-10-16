@@ -295,7 +295,7 @@ static void FillRRGrad(Graphics& g, RectF r, float rad, DWORD c1, DWORD c2) {
 }
 static void StrokeRR(Graphics& g, RectF r, float rad, DWORD col, float w = 1.f) {
     GraphicsPath p; RRPath(p, r, rad);
-    Pen pen(Color(col), w);
+    Pen pen(Color((ARGB)col), w);
     g.DrawPath(&pen, &p);
 }
 static void DrawBolt(Graphics& g, float cx, float cy, float s, DWORD col) {
@@ -965,7 +965,7 @@ static void PaintMenu(Graphics& g) {
         { ID_MENU_OPT, L"Оптимізатор", L"Бустер FPS для ігор", PG_OPT },
         { ID_MENU_COL, L"Кольорокоректор", L"Гама, насиченість, температура", PG_COL } };
     for (int i = 0; i < 3; i++) {
-        RectF r(28, 75 + i * 54, 264, 50);
+        RectF r(28.f, 75.f + i * 54.f, 264.f, 50.f);
         bool hot = Hot(items[i].id), cur = (g_page == items[i].pg);
         if (hot) FillRR(g, r, 10, 0xFF1D1D2B);
         else if (cur) FillRR(g, r, 10, 0xFF171722);
@@ -1000,7 +1000,7 @@ static void PaintOpt(Graphics& g) {
     TxtR(g, st, RectF(44, 222, 340, 28), 13, COL_MUTED);
     Button(g, ID_OPT_RESTORE, RectF(406, 222, 110, 28), L"Відновити", false, 12);
     for (int i = 0; i < 6; i++) {
-        RectF r(44 + (i % 2) * 244, 266 + (i / 2) * 42, 236, 34);
+        RectF r(44.f + (i % 2) * 244.f, 266.f + (i / 2) * 42.f, 236.f, 34.f);
         Toggle(g, ID_T0 + i, r, g_optNames[i], g_opt[i]);
     }
 
@@ -1008,7 +1008,7 @@ static void PaintOpt(Graphics& g) {
     RectF c2(560, 88, 320, 310);
     Card(g, c2, L"Ігри", L"Стан виявлення процесів");
     for (int i = 0; i < 6; i++) {
-        RectF r(584, 156 + i * 32, 272, 30);
+        RectF r(584.f, 156.f + i * 32.f, 272.f, 30.f);
         bool run = g_gameRun[i], opt = g_gameOpt[i];
         SolidBrush dot(Color(run ? (opt ? COL_ACC : COL_GREEN) : 0xFF3A3A4A));
         g.FillEllipse(&dot, r.X, r.Y + 11, 8.f, 8.f);
@@ -1084,7 +1084,7 @@ static void PaintVis(Graphics& g) {
     for (int i = 0; i < 8; i++) {
         float x = 484 + i * 36.f;
         RectF r(x, 290, 28, 28);
-        SolidBrush b(Color(g_swatch[i]));
+        SolidBrush b(Color((ARGB)g_swatch[i]));
         g.FillEllipse(&b, r);
         if (g_cross.color == i) { Pen p(Color(0xFFFFFFFF), 2.f); g.DrawEllipse(&p, x - 3, 287.f, 34.f, 34.f); }
         else if (Hot(ID_SW0 + i)) { Pen p(Color(0x88FFFFFF), 1.5f); g.DrawEllipse(&p, x - 3, 287.f, 34.f, 34.f); }
